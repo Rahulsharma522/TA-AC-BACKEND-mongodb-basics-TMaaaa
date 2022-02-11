@@ -3,19 +3,39 @@ writeCode
 Write code to execute below expressions.
 
 1. Create a database named `blog`.
+use db blog
 2. Create a collection called 'articles'.
+
+db.createCollection("articles");
+
 3. Insert multiple documents(at least 3) into articles. It should have fields
 
-- title as string
-- createdAt as date
-- details as String
-- author as nested object
-  - author should have
-    - name
-    - email
-    - age
-    - example author: {name: 'abc', email: 'abc@gmail', age: 25}
-- tags : Array of strings like ['html', 'css']
+db.articles.insertMany([
+  {_id:"977", title: "A Modern Introduction to Programming",
+  author:{
+    name:"Marijn Haverbeke",
+    email:"Marijn@gmail.com",
+    age:43
+  }
+  tags:["JavaScript","Java"]
+  },
+  {_id:"978", title:"Learning JavaScript Design Patterns", details:"A JavaScript and jQuery Developer's Guide",
+  author:{
+    name:"Addy Osmani",
+    email:"Addy@gmail.com",
+    age:47
+  }
+  tags:["Jquery","JavaScript"]
+  },
+  {_id:"979", title: "Speaking JavaScript", details: "An In-Depth Guide for Programmers",
+  author:{
+    name:"Marijn Haverbeke",
+    email:"Marijn@gmail.com",
+    age:43
+  }
+  tags:["python","Java"]
+  }
+])
 
 ```js
 // An article should look like in the database
@@ -33,21 +53,41 @@ Write code to execute below expressions.
 ```
 
 4. Find all the articles using `db.COLLECTION_NAME.find()`
+db.articles.find().pretty();
+
 5. Find a document using \_id field.
+db.articles.find({_id:"979"});
+
 6. 1. Find documents using title
+db.articles.find({title:"Speaking JavaScript"});
+
 7. 2. Find documents using author's name field.
+db.articles.find()
+
 8. Find document using a specific tag.
+db.articles.find({tags:"JavaScript"});
 
 9. Update title of a document using its \_id field.
+db.articles.update({_id:979},{$set:{title:"Eloquent JavaScript"}});
+
 10. Update a author's name using article's title.
+db.articles.update({title:"Eloquent JavaScript"},{$set;{author.name:"Marjin Heverbik"}});
+
 11. rename details field to description from all articles in articles collection.
 12. Add additional tag in a specific document.
+db.articles.update({_id:987},{$push:{tags:"node.js"}});
 
 13. Update an article's title using $set and without $set.
+
+db.articles.update({_id:979},{$set:{title:"JavaScript"}});
+
+db.articles.update({_id:979},{title:"JavaScript"});
 
 - Write the differences here ?
 
 13. find an article using title and increment it's auhtor's age by 5.
+
+TODO: db.articles.update({title:"JavaScript"},{$set:{$add:[]}})
 
 14. Delete a document using \_id field with `db.COLLECTION_NAME.remove()`.
 
